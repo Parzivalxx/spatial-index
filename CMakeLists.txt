@@ -6,4 +6,4 @@ cmake_minimum_required (VERSION 3.8)
 project ("spatial-index")
 
 # Include sub-projects.
-add_subdirectory ("spatial-index")
+add_subdirectory ("src")
