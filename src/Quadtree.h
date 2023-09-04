@@ -10,7 +10,7 @@ public:
     void insert(const Point& point);
     std::vector<Point> rangeQuery(double startX, double startY, double endX, double endY) const;
     // Function to perform KNN query in the entire quadtree
-    std::vector<Point> knnQuery(const Point& queryPoint, int k) const;
+    std::vector<Point> knnQuery(int x, int y, int k) const;
 
 private:
     QuadtreeNode* root;

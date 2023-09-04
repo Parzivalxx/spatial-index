@@ -65,13 +65,14 @@ std::vector<Point> Quadtree::rangeQuery(double startX, double startY, double end
     return result;
 }
 
-std::vector<Point> Quadtree::knnQuery(const Point& queryPoint, int k) const {
+std::vector<Point> Quadtree::knnQuery(int x, int y, int k) const {
     std::vector<Point> nearestNeighbors;
 
     // Create a priority queue to store nearest nodes or points
     std::priority_queue<Element, std::vector<Element>, std::greater<Element>> priorityQueue;
     priorityQueue.push(Element(std::numeric_limits<double>::infinity(), root));
 
+    Point queryPoint = Point(x, y);
     // Call a recursive function to perform the KNN query starting from the root node
     knnSearch(queryPoint, k, priorityQueue, nearestNeighbors);
 
