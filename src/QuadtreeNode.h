@@ -22,7 +22,7 @@ private:
     double xMax;
     double yMax;
     QuadtreeNode* children[4];
-    static const size_t maxCapacity = 4;
+    static const std::size_t maxCapacity = 4;
     std::vector<Point> points;
 
     bool contains(const Point& point);
