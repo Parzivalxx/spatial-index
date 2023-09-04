@@ -11,6 +11,35 @@ QuadtreeNode::QuadtreeNode(double xmin, double ymin, double xmax, double ymax)
     points.clear();
 }
 
+// Getter for xMin
+double QuadtreeNode::getXMin() const {
+    return xMin;
+}
+
+// Getter for yMin
+double QuadtreeNode::getYMin() const {
+    return yMin;
+}
+
+// Getter for xMax
+double QuadtreeNode::getXMax() const {
+    return xMax;
+}
+
+// Getter for yMax
+double QuadtreeNode::getYMax() const {
+    return yMax;
+}
+
+// Getter for points
+std::vector<Point> QuadtreeNode::getPoints() const {
+    return points;
+}
+
+QuadtreeNode** QuadtreeNode::getChildren() {
+    return children;
+}
+
 // Function to check if a point is within the bounds of the node
 bool QuadtreeNode::contains(const Point& point) {
     return (point.x >= xMin && point.x <= xMax && point.y >= yMin && point.y <= yMax);
@@ -30,47 +59,37 @@ void QuadtreeNode::splitNode() {
 
     // Iterate through the points stored in the current node
     // and determine which child node each point belongs to
-    std::vector<Point> remainingPoints;
     for (const Point& point : points) {
-        bool inserted = false;
         for (int i = 0; i < 4; ++i) {
             if (children[i]->contains(point)) {
                 children[i]->insert(point); // Insert the point into the child node
-                inserted = true;
                 break;
             }
-        }
-        if (!inserted) {
-            // Point doesn't fit in any child node, keep it in the current node
-            remainingPoints.push_back(point);
         }
     }
 
     // Clear the points vector of the current node
-    points = remainingPoints;
+    points.clear();
 }
 
 // Function to insert a point into the quadtree node
 void QuadtreeNode::insert(const Point& point) {
-    // Check if the point is within the bounds of this node
-    if (contains(point)) {
-        // If this node is a leaf (has no children), add the point to this node
-        if (children[0] == nullptr) {
-            points.push_back(point);
+    // If this node is a leaf (has no children), add the point to this node
+    if (children[0] == nullptr) {
+        points.push_back(point);
 
-            // Check if this node has exceeded its capacity
-            // If so, split this node
-            if (points.size() > maxCapacity) {
-                splitNode();
-            }
+        // Check if this node has exceeded its capacity
+        // If so, split this node
+        if (points.size() > maxCapacity) {
+            splitNode();
         }
-        else {
-            // If this node has children, insert the point into the appropriate child
-            for (int i = 0; i < 4; ++i) {
-                if (children[i]->contains(point)) {
-                    children[i]->insert(point);
-                    break;
-                }
+    }
+    else {
+        // If this node has children, insert the point into the appropriate child
+        for (int i = 0; i < 4; ++i) {
+            if (children[i]->contains(point)) {
+                children[i]->insert(point);
+                break;
             }
         }
     }
