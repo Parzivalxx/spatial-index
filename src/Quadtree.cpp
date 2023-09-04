@@ -1,6 +1,7 @@
 #include "Quadtree.h"
 #include "QuadtreeNode.h"
 #include "Point.h"
+#include <limits>
 
 // Element struct used in priorityQueue
 struct Quadtree::Element {
