@@ -20,5 +20,5 @@ endif()
 
 target_include_directories(spatial_index_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_executable(main main.cpp)
-target_link_libraries(main PRIVATE spatial_index_lib)
+add_executable(spatial_index Main.cpp)
+target_link_libraries(spatial_index PRIVATE spatial_index_lib)
