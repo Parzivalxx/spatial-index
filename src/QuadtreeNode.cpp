@@ -97,8 +97,7 @@ void QuadtreeNode::insert(const Point& point) {
 }
 
 bool QuadtreeNode::isLeaf() const {
-    // A node is considered a leaf if all of its children are nullptr (i.e., it has no children).
-    return children[0] == nullptr && children[1] == nullptr && children[2] == nullptr && children[3] == nullptr;
+    return (children[0] == nullptr && children[1] == nullptr && children[2] == nullptr && children[3] == nullptr);
 }
 
 std::vector<Point> QuadtreeNode::rangeQuery(double startX, double startY, double endX, double endY) {

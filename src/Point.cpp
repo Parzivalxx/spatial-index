@@ -10,6 +10,12 @@ double Point::euclideanDistance(double x1, double y1) const {
     return (dx * dx + dy * dy);
 }
 
+double Point::euclideanDistance(const Point otherPoint) const {
+    double dx = x - otherPoint.x;
+    double dy = y - otherPoint.y;
+    return dx * dx + dy * dy;
+}
+
 // Member function to calculate Euclidean distance to another point
 double Point::minDistToPoint(const Point& otherPoint) const {
     return euclideanDistance(otherPoint.x, otherPoint.y);

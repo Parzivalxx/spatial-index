@@ -85,7 +85,7 @@ void Quadtree::knnSearch(const Point& queryPoint, int k, std::priority_queue<Ele
     
     Element topElement = priorityQueue.top();
     while (!priorityQueue.empty()) {
-        Element topElement = priorityQueue.top();
+        topElement = priorityQueue.top();
         priorityQueue.pop();
 
         // Check if the top element is a point
@@ -103,6 +103,9 @@ void Quadtree::knnSearch(const Point& queryPoint, int k, std::priority_queue<Ele
         }
     }
 
+    if (!topElement.isNode) {
+        return;
+    }
     // If the node is a leaf, process the node's points
     QuadtreeNode* node = topElement.node;
     if (node->isLeaf()) {

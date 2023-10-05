@@ -1,5 +1,7 @@
 #pragma once
+#include <iostream>
 #include "QuadtreeNode.h" // Include the header for QuadtreeNode
+#include "Point.h"
 #include <vector>
 #include <queue>
 

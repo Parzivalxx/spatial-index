@@ -4,14 +4,18 @@
 # Add source files to create a library target
 add_library(
     spatial_index_lib
-    "Main.cpp"
     "Main.h"
+    "Main.cpp"
     "Point.h"
     "Point.cpp"
     "QuadtreeNode.h"
     "QuadtreeNode.cpp"
     "Quadtree.h"
     "Quadtree.cpp"
+    "KDNode.h"
+    "KDTree.h"
+    "KDTree.cpp"
+    "KDNodeComparator.h"
 )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
@@ -20,5 +24,5 @@ endif()
 
 target_include_directories(spatial_index_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_executable(spatial_index Main.cpp)
+add_executable(spatial_index Main.cpp  "KDNode.h" "KDTree.h" "KDTree.cpp")
 target_link_libraries(spatial_index PRIVATE spatial_index_lib)
