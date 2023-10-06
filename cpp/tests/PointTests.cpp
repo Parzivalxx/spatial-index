@@ -30,4 +30,3 @@ TEST(PointTests, MinDistToPoint) {
     // Check if the actual minimum distance matches the expected minimum distance
     EXPECT_DOUBLE_EQ(expectedMinDist, actualMinDist);
 }
-

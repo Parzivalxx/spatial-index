@@ -44,3 +44,10 @@ double Point::minDistToNode(const QuadtreeNode& node) const {
     return std::min(std::min(euclideanDistance(xMin, yMin), euclideanDistance(xMax, yMax)),
         std::min(euclideanDistance(xMin, yMax), euclideanDistance(xMax, yMin)));
 }
+
+bool Point::operator<(const Point& other) const {
+    // Compare based on some criterion (e.g., x and then y)
+    if (x < other.x) return true;
+    if (x > other.x) return false;
+    return y < other.y;
+}

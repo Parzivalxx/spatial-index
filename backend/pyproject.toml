@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "spatial-index-backend"
+version = "0.1.0"
+description = ""
+authors = ["Lloyd Wang <LWANG046@e.ntu.edu.sg>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+setuptools = "^68.2.2"
+pybind11 = "^2.11.1"
+fastapi = "^0.103.2"
+uvicorn = {extras = ["standard"], version = "^0.23.2"}
+pre-commit = "^3.4.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

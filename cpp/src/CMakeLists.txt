@@ -16,6 +16,10 @@ add_library(
     "KDTree.h"
     "KDTree.cpp"
     "KDNodeComparator.h"
+    "Utils.h"
+    "BruteForce.h"
+    "BruteForce.cpp"
+    "SpatialIndex.h"
 )
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
@@ -24,5 +28,5 @@ endif()
 
 target_include_directories(spatial_index_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_executable(spatial_index Main.cpp  "KDNode.h" "KDTree.h" "KDTree.cpp")
+add_executable(spatial_index Main.cpp  "KDNode.h" "KDTree.h" "KDTree.cpp"  "Utils.h" "BruteForce.cpp" "SpatialIndex.h")
 target_link_libraries(spatial_index PRIVATE spatial_index_lib)

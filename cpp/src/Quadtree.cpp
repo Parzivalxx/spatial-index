@@ -47,10 +47,11 @@ void Quadtree::destroyTree(QuadtreeNode* node) {
     }
 }
 
-// Function to insert a point into the quadtree
-void Quadtree::insert(const Point& point) {
-    // Call the insert function of the root node to start the insertion process
-    root->insert(point);
+// Function to build a quadtree
+void Quadtree::build(std::vector<Point>& points) {
+    for (const Point& point : points) {
+        root->insert(point);
+    }
 }
 
 // Function for range query
@@ -66,7 +67,7 @@ std::vector<Point> Quadtree::rangeQuery(double startX, double startY, double end
     return result;
 }
 
-std::vector<Point> Quadtree::knnQuery(int x, int y, int k) const {
+std::vector<Point> Quadtree::knnQuery(double x, double y, int k) const {
     std::vector<Point> nearestNeighbors;
 
     // Create a priority queue to store nearest nodes or points
@@ -82,7 +83,7 @@ std::vector<Point> Quadtree::knnQuery(int x, int y, int k) const {
 
 void Quadtree::knnSearch(const Point& queryPoint, int k, std::priority_queue<Element, std::vector<Element>, std::greater<Element>> priorityQueue, std::vector<Point>& nearestNeighbors) const {
     if (priorityQueue.empty()) return;
-    
+
     Element topElement = priorityQueue.top();
     while (!priorityQueue.empty()) {
         topElement = priorityQueue.top();

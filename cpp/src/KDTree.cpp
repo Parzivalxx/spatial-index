@@ -49,13 +49,13 @@ KDNode* KDTree::buildTree(std::vector<Point> points, int depth) {
     return medianNode;
 }
 
-std::vector<Point> KDTree::rangeQuery(double startX, double startY, double endX, double endY) {
+std::vector<Point> KDTree::rangeQuery(double startX, double startY, double endX, double endY) const {
     std::vector<Point> result;
     rangeQuery(root, startX, startY, endX, endY, 0, result);
     return result;
 }
 
-void KDTree::rangeQuery(KDNode* node, double startX, double startY, double endX, double endY, int depth, std::vector<Point>& result) {
+void KDTree::rangeQuery(KDNode* node, double startX, double startY, double endX, double endY, int depth, std::vector<Point>& result) const {
     if (node == nullptr) {
         return;
     }
@@ -85,7 +85,7 @@ void KDTree::rangeQuery(KDNode* node, double startX, double startY, double endX,
 }
 
 
-std::vector<Point> KDTree::kNearestNeighbors(double queryX, double queryY, int k) {
+std::vector<Point> KDTree::knnQuery(double queryX, double queryY, int k) const {
     std::vector<Point> result;
     Point queryPoint(queryX, queryY);
     KDNodeComparator comparator(queryPoint);
@@ -100,14 +100,14 @@ std::vector<Point> KDTree::kNearestNeighbors(double queryX, double queryY, int k
     return result;
 }
 
-void KDTree::kNearestNeighbors(KDNode* node, const Point& queryPoint, int k, std::priority_queue<KDNode*, std::vector<KDNode*>, KDNodeComparator>& priorityQueue) {
+void KDTree::kNearestNeighbors(KDNode* node, const Point& queryPoint, int k, std::priority_queue<KDNode*, std::vector<KDNode*>, KDNodeComparator>& priorityQueue) const {
     if (node == nullptr) {
         return;
     }
 
     // Calculate the distance between the current node's point and the query point
     double distance = node->point.euclideanDistance(queryPoint);
-    
+
 
     // If the priority queue size exceeds k, remove the farthest node
     if (priorityQueue.size() > k) {
@@ -150,4 +150,3 @@ void KDTree::kNearestNeighbors(KDNode* node, const Point& queryPoint, int k, std
         kNearestNeighbors(farChild, queryPoint, k, priorityQueue);
     }
 }
-
