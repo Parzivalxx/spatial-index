@@ -3,7 +3,9 @@
 #include <algorithm>
 #include <functional>
 
-BruteForce::BruteForce(const std::vector<Point>& data) : data_(data) {}
+BruteForce::BruteForce() : data_(std::vector<Point>()) {}
+
+void BruteForce::build(std::vector<Point>& points) {data_ = points;}
 
 std::vector<Point> BruteForce::rangeQuery(double startX, double startY, double endX, double endY) const {
     std::vector<Point> result;

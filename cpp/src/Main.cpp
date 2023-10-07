@@ -22,8 +22,9 @@ int main() {
     KDTree kdtree;
     kdtree.build(syntheticData);
 
-    // Create BruteForce object
-    BruteForce bruteForce(syntheticData);
+    // Create populate the BruteForce object
+    BruteForce bruteForce;
+    bruteForce.build(syntheticData);
 
     // Define the query rectangle for range query
     double startX = 0.0, startY = 0.0, endX = 10.0, endY = 10.0;
