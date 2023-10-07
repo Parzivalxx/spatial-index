@@ -49,13 +49,11 @@ class DataManager:
             )
             end_time = time.perf_counter()
         elif structure_type == "bruteforce":
-            print("HERE")
             start_time = time.perf_counter()
             points = self.bruteforce.range_query(
                 startx=startx, starty=starty, endx=endx, endy=endy
             )
             end_time = time.perf_counter()
-            print("HERE1")
         time_taken = (end_time - start_time) * 10**6
         return points, time_taken
 
