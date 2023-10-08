@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 from datastructs.DataManager import DataManager
 from models import (
@@ -13,6 +14,15 @@ from models import (
 
 
 app = FastAPI()
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 data_manager = DataManager()
 
@@ -30,7 +40,7 @@ async def generate_points(
         raise HTTPException(status_code=400, detail=str(e))
 
 
-@app.get("/range_query", response_model=RangeQueryResponse)
+@app.post("/range_query", response_model=RangeQueryResponse)
 async def range_query(request_data: RangeQueryRequest):
     try:
         points, time_taken = data_manager.range_query(
@@ -46,7 +56,7 @@ async def range_query(request_data: RangeQueryRequest):
         raise HTTPException(status_code=400, detail=str(e))
 
 
-@app.get("/knn_query", response_model=KnnQueryResponse)
+@app.post("/knn_query", response_model=KnnQueryResponse)
 async def knn_query(request_data: KnnQueryRequest):
     try:
         points, time_taken = data_manager.knn_query(
