@@ -41,7 +41,7 @@ async def generate_points(
 
 
 @app.post("/range_query", response_model=RangeQueryResponse)
-async def range_query(request_data: RangeQueryRequest):
+async def range_query(request_data: RangeQueryRequest) -> RangeQueryResponse:
     try:
         points, time_taken = data_manager.range_query(
             startx=request_data.startx,
@@ -57,7 +57,7 @@ async def range_query(request_data: RangeQueryRequest):
 
 
 @app.post("/knn_query", response_model=KnnQueryResponse)
-async def knn_query(request_data: KnnQueryRequest):
+async def knn_query(request_data: KnnQueryRequest) -> KnnQueryResponse:
     try:
         points, time_taken = data_manager.knn_query(
             queryx=request_data.queryx,

@@ -7,6 +7,9 @@ const HomePage: React.FC = () => {
   const [points, setPoints] = useState([]);
   const [selectedDataStructure, setSelectedDataStructure] = useState('quadtree');
   const [selectedQueryType, setSelectedQueryType] = useState('range');
+  const [queriedPoints, setQueriedPoints] = useState([]);
+  const [numNearestNeighbours, setNumNearestNeighbours] = useState(10);
+  const [queryTime, setQueryTime] = useState(0);
 
   const generateNewPoints = async (numPoints: number) => {
     try {
@@ -18,21 +21,36 @@ const HomePage: React.FC = () => {
   };
 
   useEffect(() => {
-    generateNewPoints(100);
+    generateNewPoints(1000);
   }, []);
 
+  useEffect(() => {
+    setQueriedPoints([]);
+  }, [selectedDataStructure, selectedQueryType, points]);
+
   return (
-    <div style={{ display: 'flex' }}>
-      <div style={{ flex: 2 }}>
-        <Chart points={points} dataStructure={selectedDataStructure} queryType={selectedQueryType} />
-      </div>
-      <div style={{ flex: 1 }}>
+    <div className="row py-3">
+      <div className="col-4 mt-5">
         <ControlPanel
           onGeneratePoints={generateNewPoints}
           onQueryTypeChange={setSelectedQueryType}
           onDataStructureChange={setSelectedDataStructure}
           selectedDataStructure={selectedDataStructure}
           selectedQueryType={selectedQueryType}
+          numNearestNeighbours={numNearestNeighbours}
+          onNumNearestNeighboursChange={setNumNearestNeighbours}
+          queryTime={queryTime}
+        />
+      </div>
+      <div className="col-8">
+        <Chart
+          points={points}
+          queriedPoints={queriedPoints}
+          setQueriedPoints={setQueriedPoints}
+          dataStructure={selectedDataStructure}
+          queryType={selectedQueryType}
+          numNearestNeighbours={numNearestNeighbours}
+          setQueryTime={setQueryTime}
         />
       </div>
     </div>

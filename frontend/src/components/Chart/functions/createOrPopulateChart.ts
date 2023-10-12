@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import * as d3 from 'd3';
 import { Point } from '../../../types/Point';
-import { handleMouseDown, handleMouseUp } from './mouseMovements';
+import { handleMouseDown, handleMouseUp, handleMouseClick } from './mouseMovements';
 
 export const createOrPopulateChart = (
   chartRef: React.RefObject<SVGSVGElement>,
@@ -17,6 +17,8 @@ export const createOrPopulateChart = (
     React.SetStateAction<{ startX: number; startY: number; endX: number; endY: number }>
   >,
   queryType: string,
+  setClickedX: Dispatch<SetStateAction<number>>,
+  setClickedY: Dispatch<SetStateAction<number>>,
 ) => {
   if (!(width && height)) {
     return;
@@ -43,6 +45,10 @@ export const createOrPopulateChart = (
         handleMouseUp(e, setSelectionRect, xScale, yScale);
         setIsSelecting(false);
       });
+  } else if (queryType === 'knn') {
+    svg.on('mousedown', (e) => {
+      handleMouseClick(e, setClickedX, setClickedY, xScale, yScale);
+    });
   }
 
   const pointsGroup = svg.selectAll('circle').data(points);

@@ -4,6 +4,8 @@
 #include "Point.h"
 #include <typeinfo>
 #include <cmath>
+#include <random>
+#include <chrono>
 
 // Function to generate synthetic 2D point cloud data
 std::vector<Point> generateSyntheticData(int numPoints, double xMin, double xMax, double yMin, double yMax) {
