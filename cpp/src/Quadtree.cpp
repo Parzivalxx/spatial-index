@@ -131,3 +131,28 @@ void Quadtree::knnSearch(const Point& queryPoint, int k, std::priority_queue<Ele
 
     knnSearch(queryPoint, k, priorityQueue, nearestNeighbors);
 }
+
+void Quadtree::deletePoint(QuadtreeNode* currentNode, const Point& point) {
+    if (currentNode == nullptr) {
+        // Point not found in the Quadtree
+        return;
+    }
+
+    if (currentNode->isLeaf()) {
+        // If the current node is a leaf, check if it contains the point
+        if (currentNode->contains(point)) {
+            currentNode->removePoint(point);
+        }
+    }
+    else {
+        // The current node is not a leaf, so traverse its children
+        for (int i = 0; i < 4; ++i) {
+            deletePoint(currentNode->getChildren()[i], point);
+        }
+    }
+}
+
+void Quadtree::deletePoint(const Point& point) {
+    deletePoint(root, point);
+}
+

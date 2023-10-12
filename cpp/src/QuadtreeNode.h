@@ -16,6 +16,9 @@ public:
     double getYMax() const;
     std::vector<Point> getPoints() const;
     QuadtreeNode** getChildren();
+    bool isEmpty() const;
+    void removePoint(const Point& point);
+    bool contains(const Point& point);
 
 private:
     double xMin;
@@ -25,7 +28,5 @@ private:
     QuadtreeNode* children[4];
     static const std::size_t maxCapacity = 4;
     std::vector<Point> points;
-
-    bool contains(const Point& point);
     void splitNode();
 };

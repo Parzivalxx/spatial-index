@@ -12,9 +12,9 @@ FetchContent_MakeAvailable(googletest)
 add_executable(
     spatial_index_tests
     QuadtreeTests.cpp
-    QuadtreeNodeTests.cpp
+    
     PointTests.cpp
-)
+ "KDTreeTests.cpp" "BruteForceTests.cpp")
 
 # Link your test target against Google Test and your main application code
 target_link_libraries(

@@ -10,4 +10,5 @@ struct Point {
     double minDistToPoint(const Point& otherPoint) const;
     double minDistToNode(const QuadtreeNode& node) const;
     bool operator<(const Point& other) const;
+    bool operator==(const Point& other) const;
 };

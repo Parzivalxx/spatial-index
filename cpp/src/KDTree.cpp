@@ -4,7 +4,6 @@
 KDTree::KDTree() : root(nullptr) {}
 
 KDTree::~KDTree() {
-    // Implement destructor to free KD tree nodes
     destroyTree(root);
 }
 
@@ -150,3 +149,77 @@ void KDTree::kNearestNeighbors(KDNode* node, const Point& queryPoint, int k, std
         kNearestNeighbors(farChild, queryPoint, k, priorityQueue);
     }
 }
+
+KDNode* KDTree::deletePoint(KDNode* node, const Point& point, int depth) {
+    if (node == nullptr) {
+        return nullptr; // Point not found in the KD-Tree
+    }
+
+    int currentDim = depth % 2;
+
+    if (point == node->point) {
+        // Found the node with the point, remove it
+        if (node->right == nullptr && node->left == nullptr) {
+            delete node;
+            return nullptr; // Node has no children, simply delete it
+        }
+        else {
+            // Find the in-order successor node in the subtree
+            KDNode* successor = findMin(node->right, depth);
+            node->point = successor->point;
+            node->right = deletePoint(node->right, successor->point, depth + 1);
+        }
+    }
+    else if (point < node->point) {
+        node->left = deletePoint(node->left, point, depth + 1);
+    }
+    else {
+        node->right = deletePoint(node->right, point, depth + 1);
+    }
+    return node;
+}
+
+KDNode* KDTree::findMin(KDNode* node, int depth) {
+    if (node == nullptr) {
+        return nullptr;
+    }
+
+    int currentDim = depth % 2; // Assuming a 2D KD-Tree
+
+    KDNode* leftMin = findMin(node->left, depth + 1);
+    KDNode* rightMin = findMin(node->right, depth + 1);
+    KDNode* minNode = node;
+
+    if (leftMin != nullptr) {
+        if (currentDim == 0) {
+            if (leftMin->point < minNode->point) {
+                minNode = leftMin;
+            }
+        }
+        else {
+            if (leftMin->point < minNode->point) {
+                minNode = leftMin;
+            }
+        }
+    }
+
+    if (rightMin != nullptr) {
+        if (currentDim == 0) {
+            if (rightMin->point < minNode->point) {
+                minNode = rightMin;
+            }
+        }
+        else {
+            if (rightMin->point < minNode->point) {
+                minNode = rightMin;
+            }
+        }
+    }
+
+    return minNode;
+}
+
+void KDTree::deletePoint(const Point& point) {
+    root = deletePoint(root, point, 0);
+}
+

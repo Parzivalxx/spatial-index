@@ -129,3 +129,16 @@ std::vector<Point> QuadtreeNode::rangeQuery(double startX, double startY, double
 bool QuadtreeNode::intersectsRange(double startX, double startY, double endX, double endY) const {
     return (xMax >= startX && xMin <= endX && yMax >= startY && yMin <= endY);
 }
+
+bool QuadtreeNode::isEmpty() const {
+    return points.empty() && !children[0] && !children[1] && !children[2] && !children[3];
+}
+
+void QuadtreeNode::removePoint(const Point& point) {
+    for (auto it = points.begin(); it != points.end(); ++it) {
+        if (it->x == point.x && it->y == point.y) {
+            points.erase(it);
+            return;
+        }
+    }
+}

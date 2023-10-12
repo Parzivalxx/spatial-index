@@ -39,3 +39,13 @@ std::vector<Point> BruteForce::knnQuery(double queryX, double queryY, int k) con
 
     return kNearestPoints;
 }
+
+void BruteForce::deletePoint(const Point& point) {
+    // Find and remove the point from the data_ vector
+    for (auto it = data_.begin(); it != data_.end(); ++it) {
+        if (*it == point) {
+            data_.erase(it);
+            break; // Assuming there are no duplicate points in the data_
+        }
+    }
+}
