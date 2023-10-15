@@ -190,30 +190,12 @@ KDNode* KDTree::findMin(KDNode* node, int depth) {
     KDNode* rightMin = findMin(node->right, depth + 1);
     KDNode* minNode = node;
 
-    if (leftMin != nullptr) {
-        if (currentDim == 0) {
-            if (leftMin->point < minNode->point) {
-                minNode = leftMin;
-            }
-        }
-        else {
-            if (leftMin->point < minNode->point) {
-                minNode = leftMin;
-            }
-        }
+    if (leftMin != nullptr && leftMin->point < minNode->point) {
+        minNode = leftMin;
     }
 
-    if (rightMin != nullptr) {
-        if (currentDim == 0) {
-            if (rightMin->point < minNode->point) {
-                minNode = rightMin;
-            }
-        }
-        else {
-            if (rightMin->point < minNode->point) {
-                minNode = rightMin;
-            }
-        }
+    if (rightMin != nullptr && rightMin->point < minNode->point) {
+        minNode = rightMin;
     }
 
     return minNode;
