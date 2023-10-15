@@ -166,8 +166,17 @@ KDNode* KDTree::deletePoint(KDNode* node, const Point& point, int depth) {
         else {
             // Find the in-order successor node in the subtree
             KDNode* successor = findMin(node->right, depth);
-            node->point = successor->point;
-            node->right = deletePoint(node->right, successor->point, depth + 1);
+            if (successor != nullptr) {
+                node->point = successor->point;
+                node->right = deletePoint(node->right, successor->point, depth + 1);
+            }
+            else {
+                successor = findMin(node->left, depth);
+                if (successor != nullptr) {
+                    node->point = successor->point;
+                    node->left = deletePoint(node->left, successor->point, depth + 1);
+                }
+            }
         }
     }
     else if (point < node->point) {
@@ -184,7 +193,7 @@ KDNode* KDTree::findMin(KDNode* node, int depth) {
         return nullptr;
     }
 
-    int currentDim = depth % 2; // Assuming a 2D KD-Tree
+    int currentDim = depth % 2;
 
     KDNode* leftMin = findMin(node->left, depth + 1);
     KDNode* rightMin = findMin(node->right, depth + 1);
