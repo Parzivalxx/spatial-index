@@ -104,15 +104,18 @@ std::vector<Point> QuadtreeNode::rangeQuery(double startX, double startY, double
     std::vector<Point> result;
 
     // Iterate through the points stored in this node
-    for (const Point& point : points) {
-        if (point.x >= startX && point.x <= endX && point.y >= startY && point.y <= endY) {
-            // Point falls within the specified range, add it to the result
-            result.push_back(point);
+    if (isLeaf()) {
+        for (const Point& point : points) {
+            if (point.x >= startX && point.x <= endX && point.y >= startY && point.y <= endY) {
+                // Point falls within the specified range, add it to the result
+                result.push_back(point);
+            }
         }
     }
+    
 
     // If this node has children, recursively query child nodes that intersect with the range
-    if (!isLeaf()) {
+    else {
         for (int i = 0; i < 4; ++i) {
             if (children[i]->intersectsRange(startX, startY, endX, endY)) {
                 // Recursively query the child node

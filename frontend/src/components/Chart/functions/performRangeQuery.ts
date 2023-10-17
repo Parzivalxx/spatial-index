@@ -36,6 +36,7 @@ export const performRangeQuery = async (
     const data = await response.json();
     setQueriedPoints(data.points);
     setQueryTime(data.time_taken);
+    console.log(data.points);
   } catch (error) {
     console.error('Error performing range query:', error);
   }

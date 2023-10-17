@@ -126,7 +126,7 @@ void KDTree::kNearestNeighbors(KDNode* node, const Point& queryPoint, int k, std
             farChild = node->left;
         }
     }
-    else { // Assuming dimension 1 corresponds to y-coordinate
+    else {
         if (queryPoint.y < node->point.y) {
             nearChild = node->left;
             farChild = node->right;

@@ -40,11 +40,20 @@ void measureQueryTimeAndPrint(const std::string& queryType, SpatialIndex& index,
             double startY = queryYDist(rng);
             double endX = queryXDist(rng);
             double endY = queryYDist(rng);
+            if (endX < startX) {
+                std::swap(startX, endX);
+            }
+            if (endY < startY) {
+                std::swap(startY, endY);
+            }
+            // std::cout << startX << " " << startY << " " << endX << " " << endY << std::endl;
+
 
             auto start = std::chrono::high_resolution_clock::now();
 
             if (queryType == "range") {
                 std::vector<Point> result = index.rangeQuery(startX, startY, endX, endY);
+                // std::cout << result.size() << std::endl;
             }
             else if (queryType == "knn") {
                 std::vector<Point> result = index.knnQuery(startX, startY, numNearestNeighbours);

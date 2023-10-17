@@ -45,7 +45,7 @@ void BruteForce::deletePoint(const Point& point) {
     for (auto it = data_.begin(); it != data_.end(); ++it) {
         if (*it == point) {
             data_.erase(it);
-            break; // Assuming there are no duplicate points in the data_
+            break;
         }
     }
 }

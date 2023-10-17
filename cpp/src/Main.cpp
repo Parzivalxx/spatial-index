@@ -1,6 +1,7 @@
 ﻿#include <vector>
 #include <chrono>
 #include <random>
+#include <cmath>
 #include "Point.h"
 #include "Quadtree.h"
 #include "KDTree.h"
@@ -8,9 +9,9 @@
 #include "Utils.h"
 
 int main() {
-    int numPoints = 1000;
-    double xMin = 0.0, xMax = 100.0;
-    double yMin = 0.0, yMax = 100.0;
+    int numPoints = (int)std::pow(10, 6);
+    double xMin = 0.0, xMax = 1000.0;
+    double yMin = 0.0, yMax = 1000.0;
     int numQueries = 1000;
     int numNearestNeighbours = 5;
 

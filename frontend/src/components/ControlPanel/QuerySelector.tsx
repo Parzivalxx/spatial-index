@@ -64,12 +64,12 @@ const QuerySelector: React.FC<QuerySelectorProps> = ({
           <p className="mt-3">Drag and draw rectangles on the chart to perform your range queries!</p>
         )}
         <div className="row mt-4">
-          <p className="text-secondary">
+          <div className="text-secondary">
             Query time:{' '}
             <span>
-              <h1>{queryTime}</h1> ms
+              <h1>{queryTime}</h1>microseconds
             </span>
-          </p>
+          </div>
         </div>
       </div>
     </div>

@@ -24,7 +24,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({
   queryTime,
 }) => {
   return (
-    <div className="mt-5">
+    <div className="mt-2">
       <GeneratePoints onGeneratePoints={onGeneratePoints} />
       <QuerySelector
         selectedDataStructure={selectedDataStructure}
