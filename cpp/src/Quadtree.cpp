@@ -47,6 +47,16 @@ void Quadtree::destroyTree(QuadtreeNode* node) {
     }
 }
 
+void Quadtree::clear() {
+    if (root == nullptr) return;
+    double xMin = root->getXMin();
+    double xMax = root->getXMax();
+    double yMin = root->getYMin();
+    double yMax = root->getYMax();
+    destroyTree(root);
+    root = new QuadtreeNode(xMin, yMin, xMax, yMax);
+}
+
 // Function to build a quadtree
 void Quadtree::build(std::vector<Point>& points) {
     for (const Point& point : points) {

@@ -15,6 +15,7 @@ public:
     std::vector<Point> rangeQuery(double startX, double startY, double endX, double endY) const;
     std::vector<Point> knnQuery(double queryX, double queryY, int k) const;
     void deletePoint(const Point& point);
+    void clear();
 
 private:
     KDNode* root;

@@ -7,8 +7,7 @@
 #include <random>
 #include <chrono>
 
-// Function to generate synthetic 2D point cloud data
-std::vector<Point> generateSyntheticData(int numPoints, double xMin, double xMax, double yMin, double yMax) {
+std::vector<Point> generateUniformData(int numPoints, double xMin, double xMax, double yMin, double yMax) {
     std::vector<Point> data;
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
@@ -21,8 +20,28 @@ std::vector<Point> generateSyntheticData(int numPoints, double xMin, double xMax
     return data;
 }
 
-void measureQueryTimeAndPrint(const std::string& queryType, SpatialIndex& index, const std::vector<Point>& data, int numQueries,
-    double minX, double minY, double maxX, double maxY, int numNearestNeighbours, std::vector<Point> syntheticData) {
+std::vector<Point> generateNonUniformData(int numPoints, double xMin, double xMax, double yMin, double yMax) {
+    std::vector<Point> data;
+    std::default_random_engine generator;
+
+    std::normal_distribution<double> xDistribution((xMax - xMin) / 2.0, (xMax - xMin) / 100.0);
+    std::normal_distribution<double> yDistribution((yMax - yMin) / 2.0, (yMax - yMin) / 100.0);
+
+    for (int i = 0; i < numPoints; ++i) {
+        double x = xDistribution(generator);
+        double y = yDistribution(generator);
+
+        x = std::max(xMin, std::min(xMax, x));
+        y = std::max(yMin, std::min(yMax, y));
+
+        data.push_back(Point(x, y));
+    }
+
+    return data;
+}
+
+void measureQueryTimeAndPrint(const std::string& queryType, SpatialIndex& index, int numQueries,
+    double minX, double minY, double maxX, double maxY, int numNearestNeighbours, std::vector<Point> syntheticData, bool querySmallArea, double maxArea = 50.0) {
     std::default_random_engine rng;
     std::uniform_real_distribution<double> queryXDist(minX, maxX);
     std::uniform_real_distribution<double> queryYDist(minY, maxY);
@@ -36,24 +55,35 @@ void measureQueryTimeAndPrint(const std::string& queryType, SpatialIndex& index,
     }
     else {
         for (int i = 0; i < numQueries; ++i) {
-            double startX = queryXDist(rng);
-            double startY = queryYDist(rng);
-            double endX = queryXDist(rng);
-            double endY = queryYDist(rng);
-            if (endX < startX) {
-                std::swap(startX, endX);
+            double startX, startY, endX, endY, width, height;
+            if (!querySmallArea) {
+                startX = queryXDist(rng);
+                startY = queryYDist(rng);
+                endX = queryXDist(rng);
+                endY = queryYDist(rng);
+                if (endX < startX) {
+                    std::swap(startX, endX);
+                }
+                if (endY < startY) {
+                    std::swap(startY, endY);
+                }
             }
-            if (endY < startY) {
-                std::swap(startY, endY);
+            else {
+                width = queryXDist(rng);
+                height = maxArea / width;
+
+                startX = queryXDist(rng);
+                startY = queryYDist(rng);
+
+                endX = std::min(startX + width, maxX);
+                endY = std::min(startY + height, maxY);
             }
-            // std::cout << startX << " " << startY << " " << endX << " " << endY << std::endl;
 
 
             auto start = std::chrono::high_resolution_clock::now();
 
             if (queryType == "range") {
                 std::vector<Point> result = index.rangeQuery(startX, startY, endX, endY);
-                // std::cout << result.size() << std::endl;
             }
             else if (queryType == "knn") {
                 std::vector<Point> result = index.knnQuery(startX, startY, numNearestNeighbours);
@@ -72,5 +102,11 @@ void measureQueryTimeAndPrint(const std::string& queryType, SpatialIndex& index,
     const std::type_info& typeInfo = typeid(index);
     double microSeconds = queryTime.count() * std::pow(10, 6);
     std::string typeName = typeInfo.name();
-    std::cout << "Average Time for " << typeName << " " << queryType << " Queries: " << microSeconds << " microseconds" << std::endl;
+    if (!querySmallArea) {
+        std::cout << "Average Time for " << typeName << " " << queryType << " Queries: " << microSeconds << " microseconds (normal)" << std::endl;
+    }
+    else {
+        std::cout << "Average Time for " << typeName << " " << queryType << " Queries: " << microSeconds << " microseconds (small)" << std::endl;
+    }
+    
 }

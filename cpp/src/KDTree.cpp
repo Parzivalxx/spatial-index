@@ -17,6 +17,11 @@ void KDTree::destroyTree(KDNode* node) {
     delete node;
 }
 
+void KDTree::clear() {
+    destroyTree(root);
+    root = nullptr;
+}
+
 void KDTree::build(std::vector<Point>& points) {
     root = buildTree(points, 0);
 }

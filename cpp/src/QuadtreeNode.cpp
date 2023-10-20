@@ -75,7 +75,7 @@ void QuadtreeNode::splitNode() {
 // Function to insert a point into the quadtree node
 void QuadtreeNode::insert(const Point& point) {
     // If this node is a leaf (has no children), add the point to this node
-    if (children[0] == nullptr) {
+    if (isLeaf()) {
         points.push_back(point);
 
         // Check if this node has exceeded its capacity

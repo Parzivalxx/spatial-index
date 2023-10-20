@@ -7,6 +7,10 @@ BruteForce::BruteForce() : data_(std::vector<Point>()) {}
 
 void BruteForce::build(std::vector<Point>& points) {data_ = points;}
 
+void BruteForce::clear() {
+    data_.clear();
+}
+
 std::vector<Point> BruteForce::rangeQuery(double startX, double startY, double endX, double endY) const {
     std::vector<Point> result;
     for (const Point& point : data_) {

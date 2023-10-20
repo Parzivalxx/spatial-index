@@ -26,7 +26,7 @@ private:
     double xMax;
     double yMax;
     QuadtreeNode* children[4];
-    static const std::size_t maxCapacity = 4;
+    static const std::size_t maxCapacity = 100;
     std::vector<Point> points;
     void splitNode();
 };
